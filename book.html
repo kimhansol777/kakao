@@ -1,0 +1,82 @@
+<html>
+    <head>
+        <title>
+            도서검색
+        </title>
+        <link rel="stylesheet" href="style.css"/>
+        <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
+        <style>
+            #tbl{width:920px; overflow: hidden; margin: 0px auto;}
+            .box{width:200px; float: left; background: #69EB12; margin: 10px;
+                box-shadow: 10px 10px 10px gray; text-align: center;
+                height:300px; padding: 5px;}
+            .box .title{white-space: nowrap;overflow: hidden; text-overflow: ellipsis;
+                width:200px; padding-top: 5px; font-size: 15px; font-style: bold;}
+        </style>
+    </head>
+   
+    <body>
+        <div id="page">
+            <div id="top">
+                <a href="blog.html">블로그검색</a>&nbsp;&nbsp;&nbsp;
+                <a href="book.html">도서검색</a>&nbsp;&nbsp;&nbsp;
+                <a href="local.html">지역검색</a>&nbsp;&nbsp;&nbsp;
+            </div>
+            <div id="content">
+                <div class="subject"><h1>도서검색</h1></div>
+                <div id="divSearch">
+                    <input type="text" id="txtQuery" value="자바">
+                    <input type="button" id="btnSearch" value="검 색">
+                    <select id="selSize">
+                        <option value="4">4행씩 출력</option>
+                        <option value="8">8행씩 출력</option>
+                        <option value="12">12행씩 출력</option>
+                        <option value="16">16행씩 출력</option>
+                    </select>
+                </div>
+                <div id="tbl"></div>
+                <script id="temp" type="text/x-handlebars-template">
+                    {{#each documents}}
+                    <div class="box">
+                        <div><img src="{{thumbnail}}" width=150 contents="{{contents}}" title="{{title}}" price="{{price}}원"></div>
+                        <div class="title">{{{title}}}</div>
+                        <div class="price">{{price}}원</div>
+                    </div>
+                    {{/each}}
+                </script>
+                <div id="divPage">
+                    <button id="btnPre">◀</button>
+                    <span id="spanPage"></span>
+                    <button id="btnNext">▶</button>
+                </div>
+                <div id="darken-background">
+                    <div id="lightbox">
+                        <div><img id="image" src="https://placehold.it/150x200" width=150></div>
+                        <div id="title" style="background: cornflowerblue;color: cornsilk;font-size: 25px;font-family: 휴먼편지체;"></div>
+                        <div id="price"></div>
+                        <div id="contents" style="padding:10px;font-size:15px;"></div>
+                        <input type="button" value="닫 기" id="btnClose"/>
+                    </div>
+            </div>
+            <div id="bottom">
+                <h3>작성자:인천일보아카데미 홍길동</h3>
+            </div>
+        </div>
+    </body>
+    <script> var url="https://dapi.kakao.com/v3/search/book?target=title";
+
+    $("#tbl").on("click", ".box img", function(){
+        $("#contents").html($(this).attr("contents"));
+        $("#image").attr("src",$(this).attr("src"));
+        $("#darken-background").show();
+        $("#title").html($(this).attr("title"));
+        $("#price").html($(this).attr("price"));
+    });
+    $("#btnClose").on("click", function(){
+        $("#darken-background").hide();
+    });
+    </script>
+    
+    <script src="script.js"></script>
+</html>
